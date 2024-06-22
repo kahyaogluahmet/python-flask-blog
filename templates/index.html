@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width= , initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  </head>
+  <body>
+    <h1>index</h1>
+    <article>
+      <h4>Python deneme</h4>
+      <ul>
+        <li><span class="time">2 gün önce</span></li>
+        <li><span class="time">ahmeteren</span></li>
+        <li><span class="time">Python</span></li>
+      </ul>
+      <a href="{{url_for('post',url='asdasd')}}">Login</a>
+    </article>
+  </body>
+</html>
