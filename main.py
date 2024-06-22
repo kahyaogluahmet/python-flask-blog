@@ -1,14 +1,26 @@
 from flask import Flask,url_for,request,render_template,redirect 
 from markupsafe import escape
+import mysql.connector
+
+db = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="12345",
+  database="python"
+)
+
+cursor =db.cursor(dictionary=True)
+
+
 
 app = Flask(__name__)
 
-@app.route('/',methods=['GET','POST'])
+@app.route('/')
 def home():
-    if request.method == 'POST':
-        return 'post edildi'
-    else:
-        return render_template('index.html')
+        sql="SELECT*FROM posts ORDER BY post_id DESC"
+        cursor.execute(sql)
+        posts=cursor.fetchall()
+        return render_template('index.html', posts=posts)
     
 @app.route('/user/<username>')
 def user(username):

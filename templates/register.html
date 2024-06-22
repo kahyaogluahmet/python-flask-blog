@@ -10,7 +10,53 @@
     />
   </head>
   <body>
-    <h1>index</h1>
-    <a href="{{url_for('login')}}">Login</a>
+    <header class="header">
+      <div class="container">
+        <a href="{{url_for('home')}}" class="logo"> Blog </a>
+        <nav>
+          <ul>
+            <li>
+              <a href="#">Python</a>
+            </li>
+            <li>
+              <a href="#">Python</a>
+            </li>
+            <li>
+              <a href="{{url_for('login')}}">Giriş yap</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="main container">
+      <h3>Kayıt ol</h3>
+
+    <form action="" method="POST" class="form">
+      <ul>
+        <li>
+          <label for="username">Ad-soyad</label>
+          <input type="text" name="username" id="" />
+        </li>
+        <li>
+          <label for="email">E-posta</label>
+          <input type="email" name="email" id="" />
+        </li>
+        <li>
+          <label for="password">Şifre</label>
+          <input type="password" name="password" id="" />
+        </li>
+        <li>
+          <label for="re_password">Şifre (Tekrar)</label>
+          <input type="password" name="re_password" id="" />
+        </li>
+        <li>
+          <button type="submit">Kayıt ol</button>
+        </li>
+      </ul>
+      <span class="or">hesabın var mı?</span>
+      <a href="{{url_for('login')}}" class="form-url">Login</a>
+    </form>
+  </main>
+
   </body>
 </html>

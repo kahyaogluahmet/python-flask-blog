@@ -4,19 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width= , initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
-    <h1>index</h1>
-    <article>
-      <h4>Python deneme</h4>
-      <ul>
-        <li><span class="time">2 gün önce</span></li>
-        <li><span class="time">ahmeteren</span></li>
-        <li><span class="time">Python</span></li>
-      </ul>
-      <a href="{{url_for('post',url='asdasd')}}">Login</a>
-    </article>
+
+    <header class="header">
+      <div class="container">
+        <a href="{{url_for('home')}}" class="logo"> Blog </a>
+        <nav>
+          <ul>
+            <li>
+              <a href="#">Python</a>
+            </li>
+            <li>
+              <a href="#">Python</a>
+            </li>
+            <li>
+              <a href="{{url_for('login')}}">Giriş yap</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="main container">
+        <h3>Son paylaştıklarım</h3>
+       <div class="articles">
+        {% for post in posts %}
+        <article>
+          <h4>{{post['post_title']}}</h4>
+          <ul>
+            <li><span class="time">2 gün önce</span></li>
+            <li><span class="user">ahmeteren</span></li>
+            <li><span class="category">Python</span></li>
+          </ul>
+          <a href="{{url_for('post',url='url')}}" class="show-btn">Görüntüle</a>
+        </article>
+        {% endfor %}
+       </div>
+
+    </main>
   </body>
 </html>

@@ -6,6 +6,38 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <header class="header">
+        <div class="container">
+          <a href="{{url_for('home')}}" class="logo"> Blog </a>
+          <nav>
+            <ul>
+              <li>
+                <a href="#">Python</a>
+              </li>
+              <li>
+                <a href="#">Python</a>
+              </li>
+              <li>
+                <a href="{{url_for('login')}}">Giriş yap</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main class="main container">
+        <h3>Başlık</h3>
+        <div class="post-detail">
+            <p>uzun yazı</p>
+            <p>uzun yazı</p>
+        </div>
+        <div class="post-meta">
+            <ul>
+                <li>Yazar: Ahmet Eren</li>
+                <li>Tarih: 15 gün önce</li>
+                <li> Kategori: Python</li>
+            </ul>
+        </div>
+      </main>
 </body>
 </html>
