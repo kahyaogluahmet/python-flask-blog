@@ -17,23 +17,18 @@
           <ul>
             {% for category in categories() %}
             <li>
-              <a href="{{url_for('category',url=category['category_url'])}}">{{category['category_name']}}</a>
+              <a href="#">{{category['category_name']}}</a>
             </li>
            {% endfor %}
-            <li class="btn">
-              {% if 'user_id' in session %}
-              <a href="{{url_for('logout')}}">Çıkış yap</a>
-
-              {% else %}
+            <li>
               <a href="{{url_for('login')}}">Giriş yap</a>
-              {% endif %}
             </li>
           </ul>
         </nav>
       </div>
     </header>
     <main class="main container">
-      <h3>Son paylaştıklarım</h3>
+      <h3>{{category['category_name']}}</h3>
       <div class="articles">
         {% for post in posts %}
         <article>

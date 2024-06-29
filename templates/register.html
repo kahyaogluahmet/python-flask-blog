@@ -15,12 +15,11 @@
         <a href="{{url_for('home')}}" class="logo"> Blog </a>
         <nav>
           <ul>
+            {% for category in categories() %}
             <li>
-              <a href="#">Python</a>
+              <a href="#">{{category['category_name']}}</a>
             </li>
-            <li>
-              <a href="#">Python</a>
-            </li>
+           {% endfor %}
             <li>
               <a href="{{url_for('login')}}">Giriş yap</a>
             </li>
