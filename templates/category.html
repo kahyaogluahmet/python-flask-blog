@@ -17,11 +17,17 @@
           <ul>
             {% for category in categories() %}
             <li>
-              <a href="#">{{category['category_name']}}</a>
+              <a href="{{url_for('category',url=category['category_url'])}}">{{category['category_name']}}</a>
             </li>
            {% endfor %}
-            <li>
+            <li class="btn">
+              {% if 'user_id' in session %}
+              <a href="{{url_for('newPost')}}">İçerik ekle</a>
+              <a href="{{url_for('logout')}}">Çıkış yap</a>
+
+              {% else %}
               <a href="{{url_for('login')}}">Giriş yap</a>
+              {% endif %}
             </li>
           </ul>
         </nav>

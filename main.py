@@ -16,6 +16,20 @@ cursor =db.cursor(dictionary=True)
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+def hasPost(url):
+    sql = "SELECT post_id FROM posts WHERE post_url = %s"
+    cursor.execute(sql, (url,))
+    post = cursor.fetchone()
+    return post
+
+
+def hasUser(email):
+    sql = "SELECT user_id FROM users WHERE user_email = %s"
+    cursor.execute(sql, (email,))
+    post = cursor.fetchone()
+    return post
+
+
 
 def categories():
     sql = "SELECT * FROM categories ORDER BY category_name ASC"
@@ -81,10 +95,31 @@ def login():
 
     return render_template('login.html', error=error)
 
-    
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-        return render_template('register.html')
+    error = ''
+    if request.method == 'POST':
+        if request.form['username'] == '':
+            error = 'Adınızı ve soyadınız belirtin'
+        elif request.form['email'] == '':
+            error = 'E-posta adresinizi belirtin'
+        elif request.form['password'] == '' or request.form['re_password'] == '':
+            error = 'Şifrenizi belirtin.'
+        elif request.form['password'] != request.form['re_password']:
+            error = 'Girdiğiniz şifreler birbiriyle uyuşmuyor'
+        elif hasUser(request.form['email']):
+            error = 'Bu e-posta ile birisi zaten kayıtlı, başka bir tane deneyin'
+        else:
+            sql = "INSERT INTO users SET user_name = %s, user_email = %s, user_password = %s"
+            cursor.execute(sql, (request.form['username'], request.form['email'], (request.form['password'])))
+            db.commit()
+            if cursor.rowcount:
+                session['user_id'] = cursor.lastrowid
+                return redirect(url_for('home'))
+            else:
+                error = 'Teknik bir problemden dolayı kaydınız oluşturulamadı'
+
+    return render_template('register.html', error=error)
     
 @app.route('/post/<url>')
 def post(url):
@@ -98,6 +133,31 @@ def post(url):
         return render_template('post.html', post=post)
     else:
         return redirect(url_for('home'))
+
+@app.route('/new-post', methods=['GET', 'POST'])
+def newPost():
+    error = ''
+    if request.method == 'POST':
+        if request.form['title'] == '':
+            error = 'Makale başlığını belirtin'
+        elif request.form['category_id'] == '':
+            error = 'Makale kategorisini seçin'
+        elif request.form['content'] == '':
+            error = 'Makale içeriğini yazın'
+        elif hasPost((request.form['title'])):
+            error = 'Makale zaten ekli, başka bir ad deneyin'
+        else:
+            sql = "INSERT INTO posts SET post_title = %s, post_url = %s, post_content = %s, post_user_id = %s, post_category_id = %s"
+            cursor.execute(sql, (
+                request.form['title'], (request.form['title']), request.form['content'], session['user_id'],
+                request.form['category_id'],))
+            db.commit()
+            if cursor.rowcount:
+                return redirect(url_for('post', url=(request.form['title'])))
+            else:
+                error = 'Teknik bir problemden dolayı makaleniz eklenemedi'
+
+    return render_template('new-post.html', error=error)
 
 if __name__ == '__main__':
     app.run(debug=True)

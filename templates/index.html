@@ -22,6 +22,7 @@
            {% endfor %}
             <li class="btn">
               {% if 'user_id' in session %}
+              <a href="{{url_for('newPost')}}">İçerik ekle</a>
               <a href="{{url_for('logout')}}">Çıkış yap</a>
 
               {% else %}
